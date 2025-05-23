@@ -79,9 +79,6 @@ export function handleKeyUp(event: KeyboardEvent) {
 				case UIComponentsEnum.Input:
 					fetchNui('input-close', { ok: true });
 					break;
-				case UIComponentsEnum.Menu:
-					closeInteractionMenu();
-					break;
 				case UIComponentsEnum.Image:
 					fetchNui('minigame:callback', true);
 					break;

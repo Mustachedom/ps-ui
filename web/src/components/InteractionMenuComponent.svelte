@@ -3,7 +3,7 @@
     import Icon from "./Icon.svelte";
     import fetchNui from "../../utils/fetch";
     import { isDevMode } from "../stores/GeneralStores";
-
+    import { onMount } from "svelte";
     let menuData:Array<any> = $menuStore;
     let selectedMenuItem = null;
     let subMenu = null;
@@ -55,6 +55,13 @@
             menuTextColorOverride.id = null;
         }
     }
+    onMount(() => {
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeInteractionMenu();
+            }
+        });
+    });
 </script>
 
 <div class="menu-base-wrapper">
@@ -71,7 +78,15 @@
                     on:mouseleave={() => handleItemHover("menu-"+index, index, menu.color, 'leave', false)} 
                     on:click={() => handleMenuSelection(menu)}>
                         <div class="menu-icon">
+                        {#if menu.icon} 
+                            {#if menu.icon.startsWith('http') || menu.icon.startsWith('nui')}
+                                <img src={menu.icon} alt="menu-icon" style="width: 1.5vw; height: 1.5vw;"/>
+                            {:else}
+                                <Icon icon={menu.icon} styleColor={menuTextColorOverride.id === index ? menuTextColorOverride.color : menu?.color || 'var(--color-green)'} />
+                            {/if}
+                        {:else}
                             <Icon icon={menu.icon} styleColor={menuTextColorOverride.id === index ? menuTextColorOverride.color : menu?.color || 'var(--color-green)'} />
+                        {/if}
                         </div>
                         <div class="menu-details">
                             <p class="header" style="color: {menuTextColorOverride.id === index ? menuTextColorOverride.color : 'var(--color-white)'};">{menu.header}</p>
@@ -197,6 +212,9 @@
     display: flex;
     flex-direction: column;
     /* border: 0.1px solid blue; */
+}
+.menu-base-wrapper > .screen-base > .screen-body::-webkit-scrollbar {
+display: none;
 }
 
 .menu-base-wrapper > .screen-base > .screen-body > .each-panel {

@@ -48,6 +48,9 @@ end)
 RegisterNUICallback('MenuSelect', function(data, cb)
     local menuData = storedData[data.data.id]
     if menuData then
+        if menuData.action then
+            menuData.action()
+        end
         if menuData.server then
             TriggerServerEvent(menuData.event, table.unpack(menuData.args))
         else
