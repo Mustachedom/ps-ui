@@ -79,7 +79,7 @@
                     on:click={() => handleMenuSelection(menu)}>
                         <div class="menu-icon">
                         {#if menu.icon} 
-                            {#if menu.icon.startsWith('http') || menu.icon.startsWith('nui')}
+                            {#if menu.icon.startsWith('https') || menu.icon.startsWith('nui')}
                                 <img src={menu.icon} alt="menu-icon" style="width: 1.5vw; height: 1.5vw;"/>
                             {:else}
                                 <Icon icon={menu.icon} styleColor={menuTextColorOverride.id === index ? menuTextColorOverride.color : menu?.color || 'var(--color-green)'} />
